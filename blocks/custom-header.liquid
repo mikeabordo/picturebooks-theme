@@ -368,6 +368,7 @@
     font-size: 20px;
     font-weight: 600;
     margin: 0;
+    white-space: nowrap;
   }
 
   .ai-custom-header__cart-close-{{ ai_gen_id }} {
@@ -853,23 +854,75 @@
       }
 
       setupCartUpdates() {
-        document.addEventListener('cart:refresh', () => {
+        // Helper: fetch cart and refresh UI
+        const fetchAndRefresh = () => {
           fetch('/cart.js')
             .then(response => response.json())
-            .then(cart => {
-              this.refreshCart(cart);
-            });
-        });
+            .then(cart => this.refreshCart(cart))
+            .catch(err => console.error('Cart fetch error:', err));
+        };
+
+        // 1. Custom event dispatched by this header's own actions
+        document.addEventListener('cart:refresh', fetchAndRefresh);
+
+        // 2. Shopify's native cart:updated event (fired by many themes & apps)
+        document.addEventListener('cart:updated', fetchAndRefresh);
+
+        // 3. Intercept fetch() calls to /cart/add.js from anywhere on the page
+        //    (product forms, quick-add sections, third-party apps, etc.)
+        const originalFetch = window.fetch;
+        window.fetch = function(...args) {
+          const url = args[0];
+          const isCartAdd = typeof url === 'string'
+            ? url.includes('/cart/add')
+            : (url instanceof Request && url.url.includes('/cart/add'));
+
+          const result = originalFetch.apply(this, args);
+
+          if (isCartAdd) {
+            result.then(response => {
+              if (response.ok) {
+                // Clone so the original response stream is not consumed
+                response.clone().json().then(() => fetchAndRefresh());
+              }
+            }).catch(() => {});
+          }
+
+          return result;
+        };
+
+        // 4. Also intercept XMLHttpRequest for legacy add-to-cart implementations
+        const self = this;
+        const OriginalXHR = window.XMLHttpRequest;
+        window.XMLHttpRequest = function() {
+          const xhr = new OriginalXHR();
+          const originalOpen = xhr.open.bind(xhr);
+          xhr.open = function(method, url, ...rest) {
+            xhr._url = url;
+            return originalOpen(method, url, ...rest);
+          };
+          xhr.addEventListener('load', function() {
+            if (xhr._url && xhr._url.includes('/cart/add') && xhr.status >= 200 && xhr.status < 300) {
+              fetchAndRefresh();
+            }
+          });
+          return xhr;
+        };
       }
 
       refreshCart(cart) {
         const cartCounts = this.querySelectorAll('[data-cart-count]');
         cartCounts.forEach(count => {
           count.textContent = cart.item_count;
-          if (cart.item_count === 0) {
-            count.style.display = 'none';
+          if (count.classList.contains('ai-custom-header__cart-badge-{{ ai_gen_id }}')) {
+            if (cart.item_count === 0) {
+              count.style.display = 'none';
+            } else {
+              count.style.display = 'flex';
+            }
           } else {
-            count.style.display = 'flex';
+            // For title counts and other non-badge counts, don't force flex
+            count.style.display = '';
           }
         });
 
