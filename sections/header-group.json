@@ -73,6 +73,7 @@
           "blocks": {}
         }
       },
+      "disabled": true,
       "custom_css": [],
       "settings": {
         "logo_position": "left",
@@ -123,6 +124,32 @@
         "padding-block-end": 10
       }
     },
+    "177692841471a3f5e6": {
+      "type": "_blocks",
+      "settings": {}
+    },
+    "17769289321df00959": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_4ffd3c7_YVwwYA": {
+          "type": "ai_gen_block_4ffd3c7",
+          "settings": {
+            "logo": "shopify://shop_images/picturebooks-logo.webp",
+            "logo_height": 48,
+            "logo_height_mobile": 36,
+            "menu": "main-menu",
+            "cta_button_text": "Create a Book",
+            "cta_button_link": "",
+            "button_border_radius": 50
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_4ffd3c7_YVwwYA"
+      ],
+      "settings": {}
+    },
     "divider_BPqVV6": {
       "type": "divider",
       "name": "t:names.divider_section",
@@ -143,6 +170,8 @@
     "divider_NNiiNd",
     "header_section",
     "custom_liquid_e4GwYa",
+    "177692841471a3f5e6",
+    "17769289321df00959",
     "divider_BPqVV6"
   ]
 }
