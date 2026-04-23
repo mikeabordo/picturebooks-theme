@@ -724,7 +724,7 @@
       <div class="ai-custom-header__cart-footer-{{ ai_gen_id }}">
         <div class="ai-custom-header__cart-total-{{ ai_gen_id }}">
           <span>Total</span>
-          <span data-cart-total>{{ cart.total_price | money }}</span>
+          <span data-cart-total data-cart-total-price="{{ cart.total_price }}">{{ cart.total_price | money }}</span>
         </div>
         <button class="ai-custom-header__cart-checkout-{{ ai_gen_id }}" onclick="window.location.href='{{ routes.cart_url }}/checkout'">Checkout</button>
         <a href="{{ routes.cart_url }}" class="ai-custom-header__cart-view-{{ ai_gen_id }}">View Cart</a>
@@ -745,6 +745,10 @@
         this.cartOverlay = this.querySelector('[data-cart-overlay]');
         this.cartTrigger = this.querySelector('[data-cart-trigger]');
         this.cartClose = this.querySelector('[data-cart-close]');
+        // Per-line debounce timers: keyed by line number string
+        this._qtyDebounceTimers = {};
+        // Tracks inflight line updates to block duplicate requests
+        this._qtyInflight = {};
       }
 
       connectedCallback() {
@@ -805,9 +809,18 @@
             const input = this.querySelector(`[data-qty-input][data-line="${line}"]`);
             const currentQty = parseInt(input.value);
             const newQty = e.target.dataset.qtyDecrease !== undefined ? currentQty - 1 : currentQty + 1;
-            
+
             if (newQty >= 0) {
-              this.updateCartItem(line, newQty);
+              // Optimistic update: reflect the new qty immediately in the UI
+              this.optimisticUpdateQty(line, input, newQty);
+
+              // Debounce: cancel any pending server call for this line,
+              // then schedule a new one after 400 ms of inactivity.
+              clearTimeout(this._qtyDebounceTimers[line]);
+              this._qtyDebounceTimers[line] = setTimeout(() => {
+                delete this._qtyDebounceTimers[line];
+                this.updateCartItem(line, parseInt(input.value));
+              }, 400);
             }
           });
         });
@@ -816,6 +829,20 @@
         removeButtons.forEach(button => {
           button.addEventListener('click', (e) => {
             const line = e.target.dataset.line;
+
+            // Cancel any pending debounced qty update for this line
+            clearTimeout(this._qtyDebounceTimers[line]);
+            delete this._qtyDebounceTimers[line];
+
+            // Optimistic update: fade the item out immediately
+            const itemEl = e.target.closest('[data-cart-item]');
+            if (itemEl) {
+              itemEl.style.opacity = '0.4';
+              const input = itemEl.querySelector('[data-qty-input]');
+              if (input) {
+                this.optimisticUpdateQty(line, input, 0);
+              }
+            }
             this.updateCartItem(line, 0);
           });
         });
@@ -833,6 +860,48 @@
         document.body.style.overflow = '';
       }
 
+      /**
+       * Immediately update quantity input + per-item price + totals in the DOM,
+       * then fire the server request and reconcile with the real cart response.
+       */
+      optimisticUpdateQty(line, input, newQty) {
+        // Read oldQty BEFORE changing input.value so the fallback is always correct.
+        // Use !== undefined (not ||) so that qty=0 is treated as a known value, not falsy.
+        if (!this._lastKnownQtys) this._lastKnownQtys = {};
+        const oldQty = (this._lastKnownQtys[line] !== undefined)
+          ? this._lastKnownQtys[line]
+          : parseInt(input.dataset.origQty || input.value, 10);
+
+        // Update input value after capturing oldQty
+        input.value = newQty;
+
+        const diff = newQty - oldQty;
+        // Keep the optimistic baseline current so rapid clicks chain correctly
+        this._lastKnownQtys[line] = newQty;
+        const cartCounts = this.querySelectorAll('[data-cart-count]');
+        cartCounts.forEach(el => {
+          const current = parseInt(el.textContent) || 0;
+          el.textContent = Math.max(0, current + diff);
+        });
+
+        // Optimistically update the total price
+        const itemEl = input.closest('[data-cart-item]');
+        if (itemEl) {
+          const priceEl = itemEl.querySelector('[data-unit-price]');
+          if (priceEl) {
+            const unitPrice = parseInt(priceEl.dataset.unitPrice, 10);
+            const priceDiff = diff * unitPrice;
+            const cartTotal = this.querySelector('[data-cart-total]');
+            if (cartTotal) {
+              const currentTotal = parseInt(cartTotal.dataset.cartTotalPrice || 0);
+              const newTotal = Math.max(0, currentTotal + priceDiff);
+              cartTotal.dataset.cartTotalPrice = newTotal;
+              cartTotal.textContent = this.formatMoney(newTotal);
+            }
+          }
+        }
+      }
+
       updateCartItem(line, quantity) {
         fetch('/cart/change.js', {
           method: 'POST',
@@ -846,10 +915,16 @@
         })
         .then(response => response.json())
         .then(cart => {
+          // Server is the source of truth — reconcile the full cart
           this.refreshCart(cart);
         })
         .catch(error => {
           console.error('Error updating cart:', error);
+          // On error, re-fetch to restore a consistent state
+          fetch('/cart.js')
+            .then(r => r.json())
+            .then(cart => this.refreshCart(cart))
+            .catch(() => {});
         });
       }
 
@@ -928,6 +1003,7 @@
 
         const cartTotal = this.querySelector('[data-cart-total]');
         if (cartTotal) {
+          cartTotal.dataset.cartTotalPrice = cart.total_price;
           cartTotal.textContent = this.formatMoney(cart.total_price);
         }
 
@@ -940,20 +1016,25 @@
               footer.style.display = 'none';
             }
           } else {
+            // Store per-line unit prices so optimistic updates can recalculate item totals
+            this._lastKnownQtys = {};
             let itemsHTML = '';
             cart.items.forEach((item, index) => {
+              const lineNum = index + 1;
+              const unitPrice = Math.round(item.final_price / item.quantity);
+              this._lastKnownQtys[lineNum] = item.quantity;
               itemsHTML += `
                 <div class="ai-custom-header__cart-item-{{ ai_gen_id }}" data-cart-item="${item.key}">
                   ${item.image ? `<img src="${item.image}" alt="${item.title}" class="ai-custom-header__cart-item-image-{{ ai_gen_id }}">` : ''}
                   <div class="ai-custom-header__cart-item-details-{{ ai_gen_id }}">
                     <h3 class="ai-custom-header__cart-item-title-{{ ai_gen_id }}">${item.product_title}</h3>
-                    <p class="ai-custom-header__cart-item-price-{{ ai_gen_id }}">${this.formatMoney(item.final_price)}</p>
+                    <p class="ai-custom-header__cart-item-price-{{ ai_gen_id }}" data-unit-price="${unitPrice}">${this.formatMoney(item.final_price)}</p>
                     <div class="ai-custom-header__cart-item-quantity-{{ ai_gen_id }}">
-                      <button class="ai-custom-header__cart-qty-button-{{ ai_gen_id }}" data-qty-decrease data-line="${index + 1}">-</button>
-                      <input type="number" class="ai-custom-header__cart-qty-input-{{ ai_gen_id }}" value="${item.quantity}" min="0" data-qty-input data-line="${index + 1}">
-                      <button class="ai-custom-header__cart-qty-button-{{ ai_gen_id }}" data-qty-increase data-line="${index + 1}">+</button>
+                      <button class="ai-custom-header__cart-qty-button-{{ ai_gen_id }}" data-qty-decrease data-line="${lineNum}">-</button>
+                      <input type="number" class="ai-custom-header__cart-qty-input-{{ ai_gen_id }}" value="${item.quantity}" min="0" data-qty-input data-line="${lineNum}" data-orig-qty="${item.quantity}">
+                      <button class="ai-custom-header__cart-qty-button-{{ ai_gen_id }}" data-qty-increase data-line="${lineNum}">+</button>
                     </div>
-                    <button class="ai-custom-header__cart-remove-{{ ai_gen_id }}" data-remove-item data-line="${index + 1}">Remove</button>
+                    <button class="ai-custom-header__cart-remove-{{ ai_gen_id }}" data-remove-item data-line="${lineNum}">Remove</button>
                   </div>
                 </div>
               `;
