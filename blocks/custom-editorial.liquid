@@ -1,0 +1,591 @@
+{% doc %}
+  @prompt
+    Act as a Shopify Liquid and Frontend Developer. Create a custom Shopify section named 'custom-editorial.liquid'. This section should be block-based, allowing me to add multiple rows that alternate in layout.
+    
+    Layout Requirements:
+    
+    
+    
+    Two-Column Grid: Each row should have an image on one side and text/details on the other.
+    
+    Alternating Support: Add a setting in each block to toggle the image between the left and right sides.
+    
+    
+    
+    Design: Use the existing schema
+    
+    
+    
+    Content & Customization:
+    
+    
+    
+    Headings: Support a two-part heading where the second part is italicized (Serif font).
+    
+    Details: Include a sub-label (e.g., 'NO. 01'), a rich-text description area, and a technical specs footer (Size, Pages, Binding).
+    
+    Button Controls: Add an outlined button with a URL setting. Include a Range Slider in the schema to adjust the border-radius (0px to 50px) and a Dropdown to choose between different icons (Arrow, Plus, or Cart).
+    
+    Animations & UX:
+    
+    
+    
+    Hover Effects: When hovering over the image, it should subtly zoom in. When hovering over the button, the icon should slide slightly to the right.
+    
+    Scroll Animations: Use the Intersection Observer API to make the content fade and slide upward smoothly as the user scrolls down the page.
+    
+    Technical:
+    
+    
+    
+    Use pure Liquid, CSS (within <style> tags), and vanilla JavaScript.
+    
+    Ensure it is fully responsive, stacking columns vertically on mobile devices.
+    
+    IMPORTANT: Do this in a single file, use the color palleted that I also used in header, follow the font of the heading in theme settings and also make the color palette editable
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-editorial-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    padding: 60px 20px;
+    background-color: {{ block.settings.background_color }};
+  }
+
+  .ai-editorial-container-{{ ai_gen_id }} {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .ai-editorial-row-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    margin-bottom: 80px;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .ai-editorial-row-{{ ai_gen_id }}.ai-visible-{{ ai_gen_id }} {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .ai-editorial-row-{{ ai_gen_id }}:last-child {
+    margin-bottom: 0;
+  }
+
+  .ai-editorial-row-{{ ai_gen_id }}.ai-reverse-{{ ai_gen_id }} {
+    direction: rtl;
+  }
+
+  .ai-editorial-row-{{ ai_gen_id }}.ai-reverse-{{ ai_gen_id }} > * {
+    direction: ltr;
+  }
+
+  .ai-editorial-image-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+  }
+
+  .ai-editorial-image-{{ ai_gen_id }} {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+
+  .ai-editorial-image-wrapper-{{ ai_gen_id }}:hover .ai-editorial-image-{{ ai_gen_id }} {
+    transform: scale(1.05);
+  }
+
+  .ai-editorial-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+  }
+
+  .ai-editorial-placeholder-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    max-width: 300px;
+    max-height: 300px;
+  }
+
+  .ai-editorial-content-{{ ai_gen_id }} {
+    padding: 20px 0;
+  }
+
+  .ai-editorial-label-{{ ai_gen_id }} {
+    font-family: {{ settings.type_subheading_font.family }}, {{ settings.type_subheading_font.fallback_families }};
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: {{ block.settings.label_color }};
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .ai-editorial-heading-{{ ai_gen_id }} {
+    font-family: {{ settings.type_heading_font.family }}, {{ settings.type_heading_font.fallback_families }};
+    font-size: {{ settings.type_size_h2 }}px;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    color: {{ block.settings.heading_color }};
+  }
+
+  .ai-editorial-heading-accent-{{ ai_gen_id }} {
+    font-family: {{ settings.type_accent_font.family }}, {{ settings.type_accent_font.fallback_families }};
+    font-style: italic;
+  }
+
+  .ai-editorial-description-{{ ai_gen_id }} {
+    font-family: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
+    font-size: {{ settings.type_size_paragraph }}px;
+    line-height: 1.6;
+    color: {{ block.settings.text_color }};
+    margin-bottom: 24px;
+  }
+
+  .ai-editorial-specs-{{ ai_gen_id }} {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+
+  .ai-editorial-spec-{{ ai_gen_id }} {
+    font-family: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
+    font-size: 14px;
+    color: {{ block.settings.spec_text_color }};
+  }
+
+  .ai-editorial-spec-label-{{ ai_gen_id }} {
+    font-weight: 600;
+    color: {{ block.settings.spec_label_color }};
+    margin-right: 4px;
+  }
+
+  .ai-editorial-button-{{ ai_gen_id }} {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 28px;
+    background-color: {{ block.settings.button_background }};
+    color: {{ block.settings.button_text_color }};
+    border: 1px solid {{ block.settings.button_border_color }};
+    border-radius: var(--ai-button-radius-{{ ai_gen_id }});
+    text-decoration: none;
+    font-family: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .ai-editorial-button-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_background }};
+    color: {{ block.settings.button_hover_text_color }};
+    border-color: {{ block.settings.button_hover_border_color }};
+  }
+
+  .ai-editorial-button-icon-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease;
+  }
+
+  .ai-editorial-button-{{ ai_gen_id }}:hover .ai-editorial-button-icon-{{ ai_gen_id }} {
+    transform: translateX(4px);
+  }
+
+  @media screen and (max-width: 768px) {
+    .ai-editorial-{{ ai_gen_id }} {
+      padding: 40px 16px;
+    }
+
+    .ai-editorial-row-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+      gap: 32px;
+      margin-bottom: 60px;
+    }
+
+    .ai-editorial-row-{{ ai_gen_id }}.ai-reverse-{{ ai_gen_id }} {
+      direction: ltr;
+    }
+
+    .ai-editorial-heading-{{ ai_gen_id }} {
+      font-size: calc({{ settings.type_size_h2 }}px * 0.75);
+    }
+
+    .ai-editorial-specs-{{ ai_gen_id }} {
+      gap: 16px;
+    }
+  }
+{% endstyle %}
+
+<editorial-section-{{ ai_gen_id }} class="ai-editorial-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-editorial-container-{{ ai_gen_id }}">
+    {% assign reverse_class = '' %}
+    {% if block.settings.image_position == 'right' %}
+      {% assign reverse_class = 'ai-reverse-' | append: ai_gen_id %}
+    {% endif %}
+
+    <div class="ai-editorial-row-{{ ai_gen_id }} {{ reverse_class }}" data-animate>
+      <div class="ai-editorial-image-wrapper-{{ ai_gen_id }}">
+        {% if block.settings.image %}
+          <img
+            src="{{ block.settings.image | image_url: width: 1200 }}"
+            alt="{{ block.settings.image.alt | escape }}"
+            loading="lazy"
+            width="{{ block.settings.image.width }}"
+            height="{{ block.settings.image.height }}"
+            class="ai-editorial-image-{{ ai_gen_id }}"
+          >
+        {% else %}
+          <div class="ai-editorial-placeholder-{{ ai_gen_id }}">
+            {{ 'image' | placeholder_svg_tag }}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="ai-editorial-content-{{ ai_gen_id }}">
+        {% if block.settings.label != blank %}
+          <span class="ai-editorial-label-{{ ai_gen_id }}">{{ block.settings.label }}</span>
+        {% endif %}
+
+        {% if block.settings.heading_part1 != blank or block.settings.heading_part2 != blank %}
+          <h2 class="ai-editorial-heading-{{ ai_gen_id }}">
+            {{ block.settings.heading_part1 }}
+            {% if block.settings.heading_part2 != blank %}
+              <span class="ai-editorial-heading-accent-{{ ai_gen_id }}">{{ block.settings.heading_part2 }}</span>
+            {% endif %}
+          </h2>
+        {% endif %}
+
+        {% if block.settings.description != blank %}
+          <div class="ai-editorial-description-{{ ai_gen_id }}">
+            {{ block.settings.description }}
+          </div>
+        {% endif %}
+
+        {% if block.settings.spec_size != blank or block.settings.spec_pages != blank or block.settings.spec_binding != blank %}
+          <div class="ai-editorial-specs-{{ ai_gen_id }}">
+            {% if block.settings.spec_size != blank %}
+              <div class="ai-editorial-spec-{{ ai_gen_id }}">
+                <span class="ai-editorial-spec-label-{{ ai_gen_id }}">Size:</span>
+                {{ block.settings.spec_size }}
+              </div>
+            {% endif %}
+            {% if block.settings.spec_pages != blank %}
+              <div class="ai-editorial-spec-{{ ai_gen_id }}">
+                <span class="ai-editorial-spec-label-{{ ai_gen_id }}">Pages:</span>
+                {{ block.settings.spec_pages }}
+              </div>
+            {% endif %}
+            {% if block.settings.spec_binding != blank %}
+              <div class="ai-editorial-spec-{{ ai_gen_id }}">
+                <span class="ai-editorial-spec-label-{{ ai_gen_id }}">Binding:</span>
+                {{ block.settings.spec_binding }}
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+
+        {% if block.settings.button_text != blank %}
+          <a
+            href="{{ block.settings.button_url }}"
+            class="ai-editorial-button-{{ ai_gen_id }}"
+            style="--ai-button-radius-{{ ai_gen_id }}: {{ block.settings.button_border_radius }}px;"
+          >
+            {{ block.settings.button_text }}
+            <span class="ai-editorial-button-icon-{{ ai_gen_id }}">
+              {% if block.settings.button_icon == 'arrow' %}
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1 8H15M15 8L8 1M15 8L8 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              {% elsif block.settings.button_icon == 'plus' %}
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8 1V15M1 8H15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              {% elsif block.settings.button_icon == 'cart' %}
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1 1H3L3.4 3M3.4 3L5 11H13L15 3H3.4Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="6" cy="14" r="1" fill="currentColor"/>
+                  <circle cx="12" cy="14" r="1" fill="currentColor"/>
+                </svg>
+              {% endif %}
+            </span>
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</editorial-section-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class EditorialSection{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.observer = null;
+      }
+
+      connectedCallback() {
+        this.setupIntersectionObserver();
+      }
+
+      setupIntersectionObserver() {
+        const options = {
+          root: null,
+          rootMargin: '0px',
+          threshold: 0.1
+        };
+
+        this.observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('ai-visible-{{ ai_gen_id }}');
+            }
+          });
+        }, options);
+
+        const rows = this.querySelectorAll('[data-animate]');
+        rows.forEach(row => {
+          this.observer.observe(row);
+        });
+      }
+
+      disconnectedCallback() {
+        if (this.observer) {
+          this.observer.disconnect();
+        }
+      }
+    }
+
+    customElements.define('editorial-section-{{ ai_gen_id }}', EditorialSection{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Editorial row",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image position",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "default": "NO. 01"
+    },
+    {
+      "type": "text",
+      "id": "heading_part1",
+      "label": "Heading part 1",
+      "default": "Beautiful"
+    },
+    {
+      "type": "text",
+      "id": "heading_part2",
+      "label": "Heading part 2 (italic)",
+      "default": "Stories"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Discover our curated collection of timeless picture books that inspire imagination and creativity.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Technical specifications"
+    },
+    {
+      "type": "text",
+      "id": "spec_size",
+      "label": "Size",
+      "default": "8.5 x 11 inches"
+    },
+    {
+      "type": "text",
+      "id": "spec_pages",
+      "label": "Pages",
+      "default": "32"
+    },
+    {
+      "type": "text",
+      "id": "spec_binding",
+      "label": "Binding",
+      "default": "Hardcover"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Explore Collection"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button link"
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Button border radius",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "button_icon",
+      "label": "Button icon",
+      "options": [
+        {
+          "value": "arrow",
+          "label": "Arrow"
+        },
+        {
+          "value": "plus",
+          "label": "Plus"
+        },
+        {
+          "value": "cart",
+          "label": "Cart"
+        }
+      ],
+      "default": "arrow"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Label",
+      "default": "#999999"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Description text",
+      "default": "#444444"
+    },
+    {
+      "type": "color",
+      "id": "spec_label_color",
+      "label": "Spec label",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "spec_text_color",
+      "label": "Spec text",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Button background",
+      "default": "rgba(0,0,0,0)"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#faa41a"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Button border",
+      "default": "#faa41a"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_background",
+      "label": "Button hover background",
+      "default": "#faa41a"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text_color",
+      "label": "Button hover text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_border_color",
+      "label": "Button hover border",
+      "default": "#faa41a"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Editorial row"
+    }
+  ]
+}
+{% endschema %}

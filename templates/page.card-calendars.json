@@ -1,0 +1,100 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "blocks": {
+        "heading": {
+          "type": "text",
+          "name": "Title",
+          "settings": {
+            "text": "<h1>{{ closest.page.title }}</h1>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h2",
+            "font": "var(--font-primary--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "heading"
+      ],
+      "disabled": true,
+      "settings": {
+        "content_direction": "column",
+        "gap": 32,
+        "color_scheme": "",
+        "padding-block-start": 40,
+        "padding-block-end": 80
+      }
+    },
+    "blocks_nbwKym": {
+      "type": "_blocks",
+      "blocks": {
+        "custom_editorial_q66THp": {
+          "type": "custom-editorial",
+          "settings": {
+            "image_position": "left",
+            "image": "shopify://shop_images/desk-calendar.webp",
+            "label": "",
+            "heading_part1": "Beautiful",
+            "heading_part2": "Stories",
+            "description": "<p>Discover our curated collection of timeless picture books that inspire imagination and creativity.</p>",
+            "spec_size": "",
+            "spec_pages": "",
+            "spec_binding": "",
+            "button_text": "CUSTOMIZE HERE",
+            "button_url": "",
+            "button_border_radius": 50,
+            "button_icon": "arrow",
+            "background_color": "#ffffff",
+            "label_color": "#999999",
+            "heading_color": "#000000",
+            "text_color": "#444444",
+            "spec_label_color": "#000000",
+            "spec_text_color": "#666666",
+            "button_background": "rgba(0,0,0,0)",
+            "button_text_color": "#faa41a",
+            "button_border_color": "#faa41a",
+            "button_hover_background": "#faa41a",
+            "button_hover_text_color": "#ffffff",
+            "button_hover_border_color": "#faa41a"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "custom_editorial_q66THp"
+      ],
+      "name": "Editorial row",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "blocks_nbwKym"
+  ]
+}
