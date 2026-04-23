@@ -60,9 +60,9 @@
             "image_position": "left",
             "image": "shopify://shop_images/desk-calendar.webp",
             "label": "",
-            "heading_part1": "Beautiful",
-            "heading_part2": "Stories",
-            "description": "<p>Discover our curated collection of timeless picture books that inspire imagination and creativity.</p>",
+            "heading_part1": "Desk",
+            "heading_part2": "Calendars",
+            "description": "<p>Stay organized everywhere with a unique, custom desk calendar that keeps your favorite memories close all day.<br/><br/>Personalize your own Desk Calendar using our free software.</p>",
             "spec_size": "",
             "spec_pages": "",
             "spec_binding": "",
@@ -72,7 +72,7 @@
             "button_icon": "arrow",
             "background_color": "#ffffff",
             "label_color": "#999999",
-            "heading_color": "#000000",
+            "heading_color": "#faa41a",
             "text_color": "#444444",
             "spec_label_color": "#000000",
             "spec_text_color": "#666666",
@@ -91,10 +91,94 @@
       ],
       "name": "Editorial row",
       "settings": {}
+    },
+    "blocks_8ifemT": {
+      "type": "_blocks",
+      "blocks": {
+        "custom_editorial_HMqTDT": {
+          "type": "custom-editorial",
+          "settings": {
+            "image_position": "right",
+            "image": "shopify://shop_images/postcards.webp",
+            "label": "",
+            "heading_part1": "Post",
+            "heading_part2": "Cards",
+            "description": "<p>In these digital days, nothing beats the traditional way of giving cards for that special occassion, because receiving one means someone actually gave effort and thought of it.<br/><br/>Personalize using our free software.<br/></p>",
+            "spec_size": "",
+            "spec_pages": "",
+            "spec_binding": "",
+            "button_text": "CUSTOMIZE HERE",
+            "button_url": "",
+            "button_border_radius": 50,
+            "button_icon": "arrow",
+            "background_color": "#ffffff",
+            "label_color": "#999999",
+            "heading_color": "#faa41a",
+            "text_color": "#444444",
+            "spec_label_color": "#000000",
+            "spec_text_color": "#666666",
+            "button_background": "rgba(0,0,0,0)",
+            "button_text_color": "#faa41a",
+            "button_border_color": "#faa41a",
+            "button_hover_background": "#faa41a",
+            "button_hover_text_color": "#ffffff",
+            "button_hover_border_color": "#faa41a"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "custom_editorial_HMqTDT"
+      ],
+      "name": "Editorial row",
+      "settings": {}
+    },
+    "blocks_A4pVNY": {
+      "type": "_blocks",
+      "blocks": {
+        "custom_editorial_PbxBc4": {
+          "type": "custom-editorial",
+          "settings": {
+            "image_position": "left",
+            "image": "shopify://shop_images/businesscards.webp",
+            "label": "",
+            "heading_part1": "Business",
+            "heading_part2": "Cards",
+            "description": "<p>A key way to convey who you are and what sets you apart. Make a great impression by creating a professional business card that suits you.<br/><br/>Personalize your own Business card by using our free software.</p>",
+            "spec_size": "",
+            "spec_pages": "",
+            "spec_binding": "",
+            "button_text": "CUSTOMIZE HERE",
+            "button_url": "",
+            "button_border_radius": 50,
+            "button_icon": "arrow",
+            "background_color": "#ffffff",
+            "label_color": "#999999",
+            "heading_color": "#faa41a",
+            "text_color": "#444444",
+            "spec_label_color": "#000000",
+            "spec_text_color": "#666666",
+            "button_background": "rgba(0,0,0,0)",
+            "button_text_color": "#faa41a",
+            "button_border_color": "#faa41a",
+            "button_hover_background": "#faa41a",
+            "button_hover_text_color": "#ffffff",
+            "button_hover_border_color": "#faa41a"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "custom_editorial_PbxBc4"
+      ],
+      "name": "Editorial row",
+      "settings": {}
     }
   },
   "order": [
     "main",
-    "blocks_nbwKym"
+    "blocks_nbwKym",
+    "blocks_8ifemT",
+    "blocks_A4pVNY"
   ]
 }
