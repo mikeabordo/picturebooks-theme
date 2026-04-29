@@ -12,48 +12,22 @@
     "main": {
       "type": "main-page",
       "blocks": {
-        "title": {
+        "text_6E8nma": {
           "type": "text",
-          "name": "t:names.title",
+          "name": "t:names.heading",
           "settings": {
-            "text": "<h1>{{ closest.page.title }}</h1>",
+            "text": "<h2>New arrivals</h2>",
             "width": "100%",
             "max_width": "normal",
             "alignment": "center",
-            "type_preset": "h2",
-            "font": "var(--font-primary--family)",
-            "font_size": "",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "content": {
-          "type": "text",
-          "name": "t:names.content",
-          "settings": {
-            "text": "{{ closest.page.content }}",
-            "width": "100%",
-            "max_width": "narrow",
-            "alignment": "center",
             "type_preset": "rte",
-            "font": "var(--font-primary--family)",
-            "font_size": "",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
             "line_height": "normal",
             "letter_spacing": "normal",
             "case": "none",
             "wrap": "pretty",
-            "color": "",
+            "color": "var(--color-foreground)",
             "background": false,
             "background_color": "#00000026",
             "corner_radius": 0,
@@ -66,8 +40,7 @@
         }
       },
       "block_order": [
-        "title",
-        "content"
+        "text_6E8nma"
       ],
       "settings": {
         "content_direction": "column",
@@ -77,76 +50,257 @@
         "padding-block-end": 0
       }
     },
-    "form": {
-      "type": "section",
+    "1777427248ed44265e": {
+      "type": "_blocks",
       "blocks": {
-        "contact_form_UwiCkQ": {
-          "type": "contact-form",
+        "ai_gen_block_cdd983e_8AX3XR": {
+          "type": "ai_gen_block_cdd983e",
           "settings": {
-            "width": "custom",
-            "custom_width": 50,
-            "width_mobile": "custom",
+            "desktop_width_percent": 100,
+            "columns_desktop": 3,
+            "columns_mobile": "2",
+            "grid_gap": 30,
+            "grid_gap_mobile": 20,
+            "section_padding": 40,
+            "image_aspect_ratio": "16 / 9",
+            "image_border_radius": 8,
+            "image_padding_x": 0,
+            "text_alignment": "center",
+            "item_spacing": 16,
+            "content_spacing": 8,
+            "title_size": 20,
+            "title_color": "#000000",
+            "description_size": 14,
+            "description_color": "#444444",
+            "item_1_title": "Item 1",
+            "item_1_description": "Add a description for this item",
+            "item_2_title": "Item 2",
+            "item_2_description": "Add a description for this item",
+            "item_3_title": "Item 3",
+            "item_3_description": "Add a description for this item",
+            "item_4_title": "",
+            "item_4_description": "",
+            "item_5_title": "",
+            "item_5_description": "",
+            "item_6_title": "",
+            "item_6_description": ""
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_cdd983e_8AX3XR"
+      ],
+      "settings": {}
+    },
+    "collection_list_dHcaFU": {
+      "type": "collection-list",
+      "blocks": {
+        "group_NwBEdV": {
+          "type": "group",
+          "name": "t:names.header",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
             "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
             "inherit_color_scheme": true,
             "color_scheme": "",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
             "padding-block-start": 0,
             "padding-block-end": 0,
             "padding-inline-start": 0,
             "padding-inline-end": 0
           },
           "blocks": {
-            "submit-button": {
-              "type": "contact-form-submit-button",
-              "static": true,
+            "text_tFbL3k": {
+              "type": "text",
+              "name": "t:names.text",
               "settings": {
-                "label": "Submit",
-                "style_class": "button",
+                "text": "<h3>Premium Prints</h3>",
                 "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 16,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
               },
               "blocks": {}
             }
           },
-          "block_order": []
+          "block_order": [
+            "text_tFbL3k"
+          ]
+        },
+        "static-collection-card": {
+          "type": "_collection-card",
+          "name": "t:names.collection_card",
+          "static": true,
+          "settings": {
+            "placement": "below_image",
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "flex-start",
+            "collection_card_gap": 8,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0
+          },
+          "blocks": {
+            "collection_title_3ejFCn": {
+              "type": "collection-title",
+              "name": "t:names.collection_title",
+              "settings": {
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": true,
+                "background_color": "#ffffff",
+                "corner_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 4,
+                "padding-inline-start": 8,
+                "padding-inline-end": 8
+              },
+              "blocks": {}
+            },
+            "collection-card-image": {
+              "type": "_collection-card-image",
+              "name": "t:names.collection_card_image",
+              "static": true,
+              "settings": {
+                "image_ratio": "adapt",
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "collection_title_3ejFCn"
+          ]
         }
       },
       "block_order": [
-        "contact_form_UwiCkQ"
+        "group_NwBEdV"
       ],
-      "name": "t:names.contact_form",
+      "name": "t:names.collections_grid",
       "settings": {
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 32,
+        "collection_list": [],
+        "layout_type": "grid",
+        "carousel_on_mobile": false,
+        "columns": 3,
+        "mobile_columns": "2",
+        "mobile_card_size": "60cqw",
+        "columns_gap": 8,
+        "bento_gap": 8,
+        "rows_gap": 8,
+        "max_collections": 4,
+        "icons_style": "arrow",
+        "icons_shape": "none",
         "section_width": "page-width",
-        "section_height": "",
-        "section_height_custom": 50,
-        "color_scheme": "scheme-1",
-        "background_media": "none",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_radius": 0,
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "padding-block-start": 32,
-        "padding-block-end": 84
+        "gap": 12,
+        "color_scheme": "",
+        "padding-block-start": 48,
+        "padding-block-end": 48
       }
+    },
+    "blocks_pgDjpK": {
+      "type": "_blocks",
+      "blocks": {
+        "custom_editorial_PWdEEz": {
+          "type": "custom-editorial",
+          "settings": {
+            "image_position": "left",
+            "label": "",
+            "heading_part1": "Photo Prints",
+            "heading_part2": "",
+            "description": "<p>Discover our curated collection of timeless picture books that inspire imagination and creativity.</p>",
+            "spec_size": "",
+            "spec_pages": "",
+            "spec_binding": "",
+            "button_text": "Learn More",
+            "button_url": "",
+            "button_border_radius": 50,
+            "button_icon": "arrow",
+            "background_color": "#ffffff",
+            "label_color": "#999999",
+            "heading_color": "#000000",
+            "text_color": "#444444",
+            "spec_label_color": "#000000",
+            "spec_text_color": "#666666",
+            "button_background": "rgba(0,0,0,0)",
+            "button_text_color": "#faa41a",
+            "button_border_color": "#faa41a",
+            "button_hover_background": "#faa41a",
+            "button_hover_text_color": "#ffffff",
+            "button_hover_border_color": "#faa41a"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "custom_editorial_PWdEEz"
+      ],
+      "name": "Editorial row",
+      "settings": {}
     }
   },
   "order": [
     "main",
-    "form"
+    "1777427248ed44265e",
+    "collection_list_dHcaFU",
+    "blocks_pgDjpK"
   ]
 }
