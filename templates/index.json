@@ -767,7 +767,7 @@
           "settings": {
             "image": "shopify://shop_images/flathard.webp",
             "heading": "True Flat Hard Books",
-            "description": "Explore our latest collection of bestsellers and timeless classics.",
+            "description": "Our True Flat albums are the best way to preserve your precious memories. Bound using the highest quality materials and crafted to endure.",
             "link": "shopify://pages/cards-calendars",
             "btn_label": "View True Flat Hard Books"
           }
@@ -777,7 +777,7 @@
           "settings": {
             "image": "shopify://shop_images/cards_calendar.webp",
             "heading": "Cards & Calendars",
-            "description": "Explore our latest collection of bestsellers and timeless classics.",
+            "description": "Create exquisite and beautifully designed cards and calendars that can be personalized with your very own texts and photos. Choose from a variety of classic sizes and finishes.",
             "link": "shopify://pages/cards-calendars",
             "btn_label": "View Cards & Calendars"
           }
@@ -787,7 +787,7 @@
           "settings": {
             "image": "shopify://shop_images/premiumprints.webp",
             "heading": "Premium Prints",
-            "description": "Add a short description about this category.",
+            "description": "Showcase your most memorable moments with frame-ready, high-quality photo prints. Printed using high end digital presses on premium, imported special satin-finish photo paper.",
             "link": "shopify://pages/premium-print",
             "btn_label": "View Premium Prints"
           }
