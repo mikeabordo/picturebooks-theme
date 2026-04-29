@@ -752,15 +752,6 @@
     "custom_modern_book_slideshow_VNc78A": {
       "type": "custom-modern-book-slideshow",
       "blocks": {
-        "slide_8ei9ch": {
-          "type": "slide",
-          "settings": {
-            "heading": "Fiction",
-            "description": "Explore our latest collection of bestsellers and timeless classics.",
-            "link": "",
-            "btn_label": "Shop Now"
-          }
-        },
         "slide_G3DzfM": {
           "type": "slide",
           "settings": {
@@ -771,20 +762,42 @@
             "btn_label": "Shop Now"
           }
         },
-        "slide_hzdhJW": {
+        "slide_TpQKqj": {
           "type": "slide",
           "settings": {
-            "heading": "Fiction",
+            "image": "shopify://shop_images/flathard.webp",
+            "heading": "True Flat Hard Books",
             "description": "Explore our latest collection of bestsellers and timeless classics.",
+            "link": "",
+            "btn_label": "Shop Now"
+          }
+        },
+        "slide_8ei9ch": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/cards_calendar.webp",
+            "heading": "Cards & Calendars",
+            "description": "Explore our latest collection of bestsellers and timeless classics.",
+            "link": "",
+            "btn_label": "Shop Now"
+          }
+        },
+        "slide_YdjMaK": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/premiumprints.webp",
+            "heading": "Premium Prints",
+            "description": "Add a short description about this category.",
             "link": "",
             "btn_label": "Shop Now"
           }
         }
       },
       "block_order": [
-        "slide_8ei9ch",
         "slide_G3DzfM",
-        "slide_hzdhJW"
+        "slide_TpQKqj",
+        "slide_8ei9ch",
+        "slide_YdjMaK"
       ],
       "name": "Custom Book Slideshow",
       "settings": {
