@@ -791,13 +791,24 @@
             "link": "shopify://pages/premium-print",
             "btn_label": "View Premium Prints"
           }
+        },
+        "slide_xWc4NG": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/yearbooks-on-demand.webp",
+            "heading": "",
+            "description": "",
+            "link": "shopify://pages/school-yearbooks",
+            "btn_label": "View School Yearbooks"
+          }
         }
       },
       "block_order": [
         "slide_G3DzfM",
         "slide_TpQKqj",
         "slide_8ei9ch",
-        "slide_YdjMaK"
+        "slide_YdjMaK",
+        "slide_xWc4NG"
       ],
       "name": "Custom Book Slideshow",
       "settings": {
