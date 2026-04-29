@@ -758,7 +758,7 @@
             "image": "shopify://shop_images/photobooks.webp",
             "heading": "Photo Books",
             "description": "Create a high-quality, long-lasting photo book for your life’s biggest milestones. Available in hard or soft cover, our books blend traditional craftsmanship with modern printing to ensure your memories stay vibrant for a lifetime.",
-            "link": "shopify://collections",
+            "link": "shopify://pages/photo-books",
             "btn_label": "View Photo Books"
           }
         },
