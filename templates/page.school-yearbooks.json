@@ -120,9 +120,9 @@
                   "name": "t:names.heading",
                   "settings": {
                     "text": "<h2>Yearbooks on Demand</h2>",
-                    "width": "fit-content",
+                    "width": "100%",
                     "max_width": "normal",
-                    "alignment": "left",
+                    "alignment": "center",
                     "type_preset": "h3",
                     "font": "var(--font-body--family)",
                     "font_size": "1rem",
@@ -260,9 +260,9 @@
                   "name": "t:names.heading",
                   "settings": {
                     "text": "<h2>Yearbooks Features</h2>",
-                    "width": "fit-content",
+                    "width": "100%",
                     "max_width": "normal",
-                    "alignment": "left",
+                    "alignment": "center",
                     "type_preset": "h3",
                     "font": "var(--font-body--family)",
                     "font_size": "1rem",
