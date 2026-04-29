@@ -32,19 +32,19 @@
   }
 
   .ai-custom-grid__image-wrapper-{{ ai_gen_id }} {
-    width: 100%;
+    width: min(100%, 64%);
+    margin: 0 auto;
     overflow: hidden;
     border-radius: {{ block.settings.image_border_radius }}px;
-    background-color: #f4f4f4;
+    background-color: transparent;
     padding: 0 {{ block.settings.image_padding_x }}px;
+    box-sizing: border-box;
   }
 
   .ai-custom-grid__image-{{ ai_gen_id }} {
     width: 100%;
     height: auto;
     display: block;
-    object-fit: cover;
-    aspect-ratio: {{ block.settings.image_aspect_ratio }};
   }
 
   .ai-custom-grid__image-placeholder-{{ ai_gen_id }} {
@@ -86,6 +86,10 @@
     .ai-custom-grid__container-{{ ai_gen_id }} {
       grid-template-columns: repeat({{ block.settings.columns_mobile }}, 1fr);
       gap: {{ block.settings.grid_gap_mobile }}px;
+    }
+
+    .ai-custom-grid__image-wrapper-{{ ai_gen_id }} {
+      width: min(100%, 72%);
     }
   }
 {% endstyle %}
@@ -219,7 +223,7 @@
         { "value": "3 / 4", "label": "Portrait (3:4)" },
         { "value": "16 / 9", "label": "Wide (16:9)" }
       ],
-      "default": "1 / 1"
+      "default": "3 / 4"
     },
     {
       "type": "range",
