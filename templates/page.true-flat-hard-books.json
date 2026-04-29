@@ -17,9 +17,9 @@
           "name": "t:names.heading",
           "settings": {
             "text": "<h2>True Flat Hard Books</h2>",
-            "width": "fit-content",
+            "width": "100%",
             "max_width": "normal",
-            "alignment": "left",
+            "alignment": "center",
             "type_preset": "rte",
             "font": "var(--font-body--family)",
             "font_size": "1rem",
