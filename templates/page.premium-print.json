@@ -62,7 +62,7 @@
             "grid_gap": 30,
             "grid_gap_mobile": 20,
             "section_padding": 40,
-            "image_aspect_ratio": "16 / 9",
+            "image_aspect_ratio": "1 / 1",
             "image_border_radius": 8,
             "image_padding_x": 0,
             "text_alignment": "center",
@@ -72,12 +72,15 @@
             "title_color": "#000000",
             "description_size": 14,
             "description_color": "#444444",
-            "item_1_title": "Item 1",
-            "item_1_description": "Add a description for this item",
-            "item_2_title": "Item 2",
-            "item_2_description": "Add a description for this item",
-            "item_3_title": "Item 3",
-            "item_3_description": "Add a description for this item",
+            "item_1_image": "shopify://shop_images/photo-prints.webp",
+            "item_1_title": "PHOTO PRINTS",
+            "item_1_description": "Print your treasured memories using our E-Photo Paper.",
+            "item_2_image": "shopify://shop_images/special-prints.webp",
+            "item_2_title": "SPECIAL PRINTS",
+            "item_2_description": "We offer special papers to print your memories, see our papers here.",
+            "item_3_image": "shopify://shop_images/poster-prints.webp",
+            "item_3_title": "POSTER PRINTS",
+            "item_3_description": "Large format premium print, perfect for graduation picture, family picture, etc.",
             "item_4_title": "",
             "item_4_description": "",
             "item_5_title": "",
@@ -92,169 +95,6 @@
         "ai_gen_block_cdd983e_8AX3XR"
       ],
       "settings": {}
-    },
-    "collection_list_dHcaFU": {
-      "type": "collection-list",
-      "blocks": {
-        "group_NwBEdV": {
-          "type": "group",
-          "name": "t:names.header",
-          "settings": {
-            "content_direction": "column",
-            "vertical_on_mobile": true,
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "align_baseline": false,
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 12,
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "background_media": "none",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "toggle_overlay": false,
-            "overlay_color": "#00000026",
-            "overlay_style": "solid",
-            "gradient_direction": "to top",
-            "link": "",
-            "open_in_new_tab": false,
-            "placeholder": "",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "text_tFbL3k": {
-              "type": "text",
-              "name": "t:names.text",
-              "settings": {
-                "text": "<h3>Premium Prints</h3>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 16,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "text_tFbL3k"
-          ]
-        },
-        "static-collection-card": {
-          "type": "_collection-card",
-          "name": "t:names.collection_card",
-          "static": true,
-          "settings": {
-            "placement": "below_image",
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "flex-start",
-            "collection_card_gap": 8,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0
-          },
-          "blocks": {
-            "collection_title_3ejFCn": {
-              "type": "collection-title",
-              "name": "t:names.collection_title",
-              "settings": {
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": true,
-                "background_color": "#ffffff",
-                "corner_radius": 0,
-                "padding-block-start": 4,
-                "padding-block-end": 4,
-                "padding-inline-start": 8,
-                "padding-inline-end": 8
-              },
-              "blocks": {}
-            },
-            "collection-card-image": {
-              "type": "_collection-card-image",
-              "name": "t:names.collection_card_image",
-              "static": true,
-              "settings": {
-                "image_ratio": "adapt",
-                "toggle_overlay": false,
-                "overlay_color": "#00000026",
-                "overlay_style": "solid",
-                "gradient_direction": "to top",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "collection_title_3ejFCn"
-          ]
-        }
-      },
-      "block_order": [
-        "group_NwBEdV"
-      ],
-      "name": "t:names.collections_grid",
-      "settings": {
-        "collection_list": [],
-        "layout_type": "grid",
-        "carousel_on_mobile": false,
-        "columns": 3,
-        "mobile_columns": "2",
-        "mobile_card_size": "60cqw",
-        "columns_gap": 8,
-        "bento_gap": 8,
-        "rows_gap": 8,
-        "max_collections": 4,
-        "icons_style": "arrow",
-        "icons_shape": "none",
-        "section_width": "page-width",
-        "gap": 12,
-        "color_scheme": "",
-        "padding-block-start": 48,
-        "padding-block-end": 48
-      }
     },
     "blocks_pgDjpK": {
       "type": "_blocks",
@@ -300,7 +140,6 @@
   "order": [
     "main",
     "1777427248ed44265e",
-    "collection_list_dHcaFU",
     "blocks_pgDjpK"
   ]
 }
