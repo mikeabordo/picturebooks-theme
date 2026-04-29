@@ -103,14 +103,47 @@
           "type": "custom-editorial",
           "settings": {
             "image_position": "left",
+            "image": "shopify://shop_images/photo-prints-2.webp",
             "label": "",
             "heading_part1": "Photo Prints",
             "heading_part2": "",
-            "description": "<p>Discover our curated collection of timeless picture books that inspire imagination and creativity.</p>",
+            "description": "<p>Our Photo Prints are printed on high quality archival E-Photo paper that are water-resistant even without additional lamination and show absolutely no white break. It comes in a variety of sizes. You may also choose from a variety of special papers.</p>",
             "spec_size": "",
             "spec_pages": "",
             "spec_binding": "",
-            "button_text": "Learn More",
+            "button_text": "Start Creating",
+            "button_url": "",
+            "button_border_radius": 50,
+            "button_icon": "arrow",
+            "background_color": "#ffffff",
+            "label_color": "#999999",
+            "heading_color": "#000000",
+            "text_color": "#444444",
+            "spec_label_color": "#000000",
+            "spec_text_color": "#666666",
+            "button_background": "rgba(0,0,0,0)",
+            "button_text_color": "#faa41a",
+            "button_border_color": "#faa41a",
+            "button_hover_background": "#faa41a",
+            "button_hover_text_color": "#ffffff",
+            "button_hover_border_color": "#faa41a"
+          },
+          "blocks": {}
+        },
+        "custom_editorial_FyqYqc": {
+          "type": "custom-editorial",
+          "name": "Editorial row",
+          "settings": {
+            "image_position": "right",
+            "image": "shopify://shop_images/poster-prints-2.webp",
+            "label": "",
+            "heading_part1": "Poster Prints",
+            "heading_part2": "",
+            "description": "<p>Individual high quality large sized photo prints. Available in four different sizes, you may also customize up to 18” x 12”. Digitally printed on high quality E-Photo paper that is water resistant even without additional lamination and show absolutely no white break. You may also choose from a variety of specialty paper options. Start Creating</p>",
+            "spec_size": "",
+            "spec_pages": "",
+            "spec_binding": "",
+            "button_text": "Start Creating",
             "button_url": "",
             "button_border_radius": 50,
             "button_icon": "arrow",
@@ -131,7 +164,8 @@
         }
       },
       "block_order": [
-        "custom_editorial_PWdEEz"
+        "custom_editorial_PWdEEz",
+        "custom_editorial_FyqYqc"
       ],
       "name": "Editorial row",
       "settings": {}
