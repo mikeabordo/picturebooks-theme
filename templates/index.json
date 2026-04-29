@@ -756,10 +756,10 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/photobooks.webp",
-            "heading": "Photo Book",
+            "heading": "Photo Books",
             "description": "Create a high-quality, long-lasting photo book for your life’s biggest milestones. Available in hard or soft cover, our books blend traditional craftsmanship with modern printing to ensure your memories stay vibrant for a lifetime.",
             "link": "shopify://collections",
-            "btn_label": "Shop Now"
+            "btn_label": "View Photo Books"
           }
         },
         "slide_TpQKqj": {
@@ -768,8 +768,8 @@
             "image": "shopify://shop_images/flathard.webp",
             "heading": "True Flat Hard Books",
             "description": "Explore our latest collection of bestsellers and timeless classics.",
-            "link": "",
-            "btn_label": "Shop Now"
+            "link": "shopify://pages/cards-calendars",
+            "btn_label": "View True Flat Hard Books"
           }
         },
         "slide_8ei9ch": {
@@ -778,8 +778,8 @@
             "image": "shopify://shop_images/cards_calendar.webp",
             "heading": "Cards & Calendars",
             "description": "Explore our latest collection of bestsellers and timeless classics.",
-            "link": "",
-            "btn_label": "Shop Now"
+            "link": "shopify://pages/cards-calendars",
+            "btn_label": "View Cards & Calendars"
           }
         },
         "slide_YdjMaK": {
@@ -788,8 +788,8 @@
             "image": "shopify://shop_images/premiumprints.webp",
             "heading": "Premium Prints",
             "description": "Add a short description about this category.",
-            "link": "",
-            "btn_label": "Shop Now"
+            "link": "shopify://pages/premium-print",
+            "btn_label": "View Premium Prints"
           }
         }
       },
