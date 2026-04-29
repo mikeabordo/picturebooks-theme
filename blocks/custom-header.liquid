@@ -644,7 +644,7 @@
             <circle cx="9" cy="19" r="1.5" fill="currentColor"/>
             <circle cx="16" cy="19" r="1.5" fill="currentColor"/>
           </svg>
-          <span class="ai-custom-header__cart-badge-{{ ai_gen_id }}" data-cart-count>{{ cart.item_count }}</span>
+          <span class="ai-custom-header__cart-badge-{{ ai_gen_id }}" data-cart-count>{{ cart.items.size }}</span>
         </button>
       </div>
 
@@ -688,7 +688,7 @@
   <div class="ai-custom-header__cart-overlay-{{ ai_gen_id }}" data-cart-overlay></div>
   <div class="ai-custom-header__cart-drawer-{{ ai_gen_id }}" data-cart-drawer>
     <div class="ai-custom-header__cart-header-{{ ai_gen_id }}">
-      <h2 class="ai-custom-header__cart-title-{{ ai_gen_id }}">Cart (<span data-cart-count>{{ cart.item_count }}</span>)</h2>
+      <h2 class="ai-custom-header__cart-title-{{ ai_gen_id }}">Cart (<span data-cart-count>{{ cart.items.size }}</span>)</h2>
       <button class="ai-custom-header__cart-close-{{ ai_gen_id }}" data-cart-close aria-label="Close cart">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -696,7 +696,7 @@
       </button>
     </div>
     <div class="ai-custom-header__cart-body-{{ ai_gen_id }}" data-cart-items>
-      {% if cart.item_count == 0 %}
+      {% if cart.items.size == 0 %}
         <div class="ai-custom-header__cart-empty-{{ ai_gen_id }}">
           <p>Your cart is empty</p>
         </div>
@@ -708,10 +708,23 @@
             {% endif %}
             <div class="ai-custom-header__cart-item-details-{{ ai_gen_id }}">
               <h3 class="ai-custom-header__cart-item-title-{{ ai_gen_id }}">{{ item.product.title }}</h3>
-              <p class="ai-custom-header__cart-item-price-{{ ai_gen_id }}">{{ item.final_price | money }}</p>
+              <p
+                class="ai-custom-header__cart-item-price-{{ ai_gen_id }}"
+                data-unit-price="{{ item.final_price }}"
+              >
+                {{ item.final_price | money }}
+              </p>
               <div class="ai-custom-header__cart-item-quantity-{{ ai_gen_id }}">
                 <button class="ai-custom-header__cart-qty-button-{{ ai_gen_id }}" data-qty-decrease data-line="{{ forloop.index }}">-</button>
-                <input type="number" class="ai-custom-header__cart-qty-input-{{ ai_gen_id }}" value="{{ item.quantity }}" min="0" data-qty-input data-line="{{ forloop.index }}">
+                <input
+                  type="number"
+                  class="ai-custom-header__cart-qty-input-{{ ai_gen_id }}"
+                  value="{{ item.quantity }}"
+                  min="0"
+                  data-qty-input
+                  data-line="{{ forloop.index }}"
+                  data-orig-qty="{{ item.quantity }}"
+                >
                 <button class="ai-custom-header__cart-qty-button-{{ ai_gen_id }}" data-qty-increase data-line="{{ forloop.index }}">+</button>
               </div>
               <button class="ai-custom-header__cart-remove-{{ ai_gen_id }}" data-remove-item data-line="{{ forloop.index }}">Remove</button>
@@ -720,7 +733,7 @@
         {% endfor %}
       {% endif %}
     </div>
-    {% if cart.item_count > 0 %}
+    {% if cart.items.size > 0 %}
       <div class="ai-custom-header__cart-footer-{{ ai_gen_id }}">
         <div class="ai-custom-header__cart-total-{{ ai_gen_id }}">
           <span>Total</span>
@@ -878,10 +891,13 @@
         const diff = newQty - oldQty;
         // Keep the optimistic baseline current so rapid clicks chain correctly
         this._lastKnownQtys[line] = newQty;
+        const cartCountDiff = oldQty === 0 && newQty > 0
+          ? 1
+          : (oldQty > 0 && newQty === 0 ? -1 : 0);
         const cartCounts = this.querySelectorAll('[data-cart-count]');
         cartCounts.forEach(el => {
           const current = parseInt(el.textContent) || 0;
-          el.textContent = Math.max(0, current + diff);
+          el.textContent = Math.max(0, current + cartCountDiff);
         });
 
         // Optimistically update the total price
@@ -986,11 +1002,12 @@
       }
 
       refreshCart(cart) {
+        const cartLineCount = Array.isArray(cart.items) ? cart.items.length : 0;
         const cartCounts = this.querySelectorAll('[data-cart-count]');
         cartCounts.forEach(count => {
-          count.textContent = cart.item_count;
+          count.textContent = cartLineCount;
           if (count.classList.contains('ai-custom-header__cart-badge-{{ ai_gen_id }}')) {
-            if (cart.item_count === 0) {
+            if (cartLineCount === 0) {
               count.style.display = 'none';
             } else {
               count.style.display = 'flex';
@@ -1009,7 +1026,7 @@
 
         const cartItemsContainer = this.querySelector('[data-cart-items]');
         if (cartItemsContainer) {
-          if (cart.item_count === 0) {
+          if (cartLineCount === 0) {
             cartItemsContainer.innerHTML = '<div class="ai-custom-header__cart-empty-{{ ai_gen_id }}"><p>Your cart is empty</p></div>';
             const footer = this.querySelector('.ai-custom-header__cart-footer-{{ ai_gen_id }}');
             if (footer) {
@@ -1021,7 +1038,8 @@
             let itemsHTML = '';
             cart.items.forEach((item, index) => {
               const lineNum = index + 1;
-              const unitPrice = Math.round(item.final_price / item.quantity);
+              // In Shopify's Ajax cart, final_price is already the per-unit price.
+              const unitPrice = item.final_price;
               this._lastKnownQtys[lineNum] = item.quantity;
               itemsHTML += `
                 <div class="ai-custom-header__cart-item-{{ ai_gen_id }}" data-cart-item="${item.key}">
