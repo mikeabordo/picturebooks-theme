@@ -81,8 +81,8 @@
 
   .book-slide__btn {
     display: inline-block;
-    background-color: {{ section.settings.text_color }};
-    color: {{ section.settings.bg_color }};
+    background-color: {{ section.settings.btn_bg_color }};
+    color: {{ section.settings.btn_text_color }};
     padding: 12px 30px;
     text-decoration: none;
     border-radius: 50px;
@@ -93,15 +93,15 @@
   /* Navigation: Dots */
   .book-slider__nav {
     position: absolute;
-    bottom: 20px;
+    bottom: 1px;
     display: flex;
-    gap: 15px;
+    gap: 10px;
     z-index: 10;
   }
 
   .nav-dot {
-    width: 12px;
-    height: 12px;
+    width: 8px;
+    height: 8px;
     background: rgba(0,0,0,0.2);
     border: 1px solid rgba(255,255,255,0.4);
     border-radius: 50%;
@@ -134,7 +134,8 @@
     transition: 0.3s;
   }
 
-  .book-slider__arrow:hover { background: white; }
+  .book-slider__arrow:hover { background: #FAA41A; }
+  .book-slider__arrow:hover svg { stroke: white; }
   .book-slider__arrow--prev { left: 20px; }
   .book-slider__arrow--next { right: 20px; }
   .book-slider__arrow svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2.5; }
@@ -234,7 +235,9 @@
   "name": "Modern Book Slideshow",
   "settings": [
     { "type": "color", "id": "bg_color", "label": "Background", "default": "#ffffff" },
-    { "type": "color", "id": "text_color", "label": "Text Color", "default": "#121212" }
+    { "type": "color", "id": "text_color", "label": "Text Color", "default": "#121212" },
+    { "type": "color", "id": "btn_bg_color", "label": "Button Background Color", "default": "#FAA41A" },
+    { "type": "color", "id": "btn_text_color", "label": "Button Text Color", "default": "#ffffff" }
   ],
   "blocks": [
     {
